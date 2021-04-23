@@ -1,0 +1,28 @@
+# tag.index
+GET http://127.0.0.1:8000/api/tag/
+
+# tag.create
+###
+POST http://127.0.0.1:8000/api/tag/
+Content-Type: application/json
+
+{
+    "title": "Information Technology"
+}
+
+# tag.delete (last parameter is the UUID)
+###
+DELETE http://127.0.0.1:8000/api/tag/04292fdb-3489-4808-ac6b-201a17d28aa9
+
+#tag.show (last parameter is the UUID)
+###
+GET http://127.0.0.1:8000/api/tag/71745e34-d7ca-44b8-aedb-8968b3853181
+
+# tag.update
+###
+PUT http://127.0.0.1:8000/api/tag/71745e34-d7ca-44b8-aedb-8968b3853181
+Content-Type: application/json
+
+{
+    "title": "Information Technology"
+}
