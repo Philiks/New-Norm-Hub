@@ -3,40 +3,47 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tag;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use PHPUnit\Util\Json;
 
 class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return mixed
      */
     public function index()
     {
-        Tag::all();
+        return Tag::all();
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \App\Models\Tag $tag
      */
     public function store(Request $request)
     {
-        //
+        $tag = new Tag();
+        $tag->id = Str::uuid()->toString();
+        $tag->title = $request->title;
+        $tag->save();
+
+        return $tag;
     }
 
     /**
      * Display the specified resource.
      *
      * @param  \App\Models\Tag  $tag
-     * @return \Illuminate\Http\Response
+     * @return json $title
      */
     public function show(Tag $tag)
     {
-        //
+        return response()->json(['title' => $tag->title]);
     }
 
     /**
@@ -44,11 +51,12 @@ class TagController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Tag  $tag
-     * @return \Illuminate\Http\Response
+     * @return json $title
      */
     public function update(Request $request, Tag $tag)
     {
-        //
+        $tag->update($request->all());
+        return response()->json(['title' => $tag->title]);
     }
 
     /**
@@ -59,6 +67,7 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        //
+        $tag->delete();
+        return back();
     }
 }
