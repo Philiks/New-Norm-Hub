@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBlogCommentsTable extends Migration
+class CreatePivotCommentCommentTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateBlogCommentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('blog_comments', function (Blueprint $table) {
-            $table->foreignUuid('blog_id')->constrained();
-            $table->foreignUuid('comment_id')->constrained();
-            $table->timestamps();
+        Schema::create('comment_comment', function (Blueprint $table) {
+            $table->foreignUuid('from_id')->constrained('comments');
+            $table->foreignUuid('reply_id')->constrained('comments');
         });
     }
 
@@ -27,6 +26,6 @@ class CreateBlogCommentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('blog_comments');
+        Schema::dropIfExists('pivot_comment_comment');
     }
 }

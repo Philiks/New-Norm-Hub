@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBlogPhotosTable extends Migration
+class CreatePivotBlogTagTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateBlogPhotosTable extends Migration
      */
     public function up()
     {
-        Schema::create('blog_photos', function (Blueprint $table) {
+        Schema::create('blog_tag', function (Blueprint $table) {
             $table->foreignUuid('blog_id')->constrained();
-            $table->foreignUuid('photo_id')->constrained();
+            $table->foreignUuid('tag_id')->constrained();
         });
     }
 
@@ -26,6 +26,6 @@ class CreateBlogPhotosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('blog_photos');
+        Schema::dropIfExists('pivot_blog_tag');
     }
 }
