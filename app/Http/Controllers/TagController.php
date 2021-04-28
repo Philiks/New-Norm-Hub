@@ -3,16 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tag;
-use Illuminate\Support\Str;
+use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
-use PHPUnit\Util\Json;
 
 class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
     public function index()
     {
@@ -23,15 +22,16 @@ class TagController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \App\Models\Tag $tag
+     * @return \App\Models\Tag  $tag
      */
     public function store(Request $request)
     {
-        $tag = new Tag();
-        $tag->id = Str::uuid()->toString();
-        $tag->title = $request->title;
-        $tag->save();
+        $request->validate([
+            'title' => 'string|max:255',
+        ]);
 
+        $tag = Tag::create(['title' => $request->title]);
+        
         return $tag;
     }
 
@@ -39,24 +39,11 @@ class TagController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Tag  $tag
-     * @return json $title
+     * @return \App\Models\Tag  $tag
      */
     public function show(Tag $tag)
     {
-        return response()->json(['title' => $tag->title]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Tag  $tag
-     * @return json $title
-     */
-    public function update(Request $request, Tag $tag)
-    {
-        $tag->update($request->all());
-        return response()->json(['title' => $tag->title]);
+        return $tag;
     }
 
     /**
@@ -68,6 +55,7 @@ class TagController extends Controller
     public function destroy(Tag $tag)
     {
         $tag->delete();
+
         return back();
     }
 }
