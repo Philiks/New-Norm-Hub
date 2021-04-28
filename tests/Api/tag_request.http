@@ -14,9 +14,9 @@ Content-Type: application/json
 ###
 DELETE http://127.0.0.1:8000/api/tag/04292fdb-3489-4808-ac6b-201a17d28aa9
 
-#tag.show (last parameter is the UUID)
+# tag.show (last parameter is the UUID)
 ###
-GET http://127.0.0.1:8000/api/tag/71745e34-d7ca-44b8-aedb-8968b3853181
+GET http://127.0.0.1:8000/api/tag/b91990b2-5464-43cc-9a12-157f76ea03d2
 
 # tag.update
 ###
