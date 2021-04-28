@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,13 +13,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::view('/navigation', 'navigation')->name('nav');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'home')->name('home');
+Route::view('/about-us', 'about-us')->name('about-us');
+Route::view('/terms-and-services', 'terms-and-services')->name('terms-and-services');
+Route::get('/blogs', [BlogController::class, 'create'])
+        ->middleware('auth')
+        ->name('blog.write');
+Route::get('/profiles', [BlogController::class, 'create'])->name('profile');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::apiResource('blog', BlogController::class);
 
 require __DIR__.'/auth.php';
