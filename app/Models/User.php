@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Str;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
@@ -35,6 +36,23 @@ class User extends Authenticatable
     public $incrementing = false;
 
     /**
+     * Bootstrap the model and its traits.
+     * 
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        /**
+         * Create the primary key UUID.
+         */
+        static::creating(function ($post) {
+            $post->{$post->getKeyName()} = Str::uuid()->toString();
+        });
+    }
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -44,6 +62,7 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
+        'profile_id',
     ];
 
     /**

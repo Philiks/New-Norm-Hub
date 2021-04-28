@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
@@ -34,6 +35,23 @@ class Comment extends Model
     public $incrementing = false;
 
     /**
+     * Bootstrap the model and its traits.
+     * 
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        /**
+         * Create the primary key UUID.
+         */
+        static::creating(function ($post) {
+            $post->{$post->getKeyName()} = Str::uuid()->toString();
+        });
+    }
+
+    /**
      * The attributes that are mass assignable.
      * 
      * @var array
@@ -53,4 +71,14 @@ class Comment extends Model
         'created_at',
         'updated_at',
     ];
+
+    /**
+     * Method for accessing comments from pivot table comment_comment.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function comments()
+    {
+        return $this->belongsToMany(Comment::class);
+    }
 }

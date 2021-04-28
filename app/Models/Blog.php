@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
 class Blog extends Model
@@ -34,16 +35,37 @@ class Blog extends Model
     public $incrementing = false;
 
     /**
+     * Bootstrap the model and its traits.
+     * 
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        /**
+         * Create the primary key UUID.
+         */
+        static::creating(function ($post) {
+            $post->{$post->getKeyName()} = Str::uuid()->toString();
+        });
+    }
+
+    /**
      * The attributes that are mass assignable.
      * 
      * @var array
      */
     protected $fillable = [
+        'author_id',
         'title',
+        'main_photo_id',
+        'is_featured',
         'content',
         'read_time',
         'like_count',
         'comment_count',
+        'tag_id',
     ];
 
     /**
@@ -58,4 +80,34 @@ class Blog extends Model
         */
         'updated_at',
     ];
+
+    /**
+     * Method for accessing tags from pivot table blog_tag.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
+    /**
+     * Method for accessing comments from pivot table blog_comment.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function comments()
+    {
+        return $this->belongsToMany(Comment::class);
+    }
+
+    /**
+     * Method for accessing photos from pivot table blog_tag.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function photos()
+    {
+        return $this->belongsToMany(Photo::class);
+    }
 }

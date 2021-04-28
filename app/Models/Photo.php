@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class Photo extends Model
 {
@@ -34,11 +36,30 @@ class Photo extends Model
     public $incrementing = false;
 
     /**
+     * Bootstrap the model and its traits.
+     * 
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        /**
+         * Create the primary key UUID.
+         */
+        static::creating(function ($post) {
+            $post->{$post->getKeyName()} = Str::uuid()->toString();
+        });
+    }
+
+    /**
      * The attributes that are mass assignable.
      * 
      * @var array
      */
     protected $fillable = [
+        'folder',
+        'filename',
         'photo',
         'caption',
     ];
