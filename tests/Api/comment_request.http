@@ -1,0 +1,29 @@
+# comment.index
+###
+GET http://127.0.0.1:8000/api/comment/
+
+# comment.create
+###
+POST http://127.0.0.1:8000/api/comment/
+Content-Type: application/json
+
+{
+    "title": "Computer Science"
+}
+
+# comment.delete (last parameter is the UUID)
+###
+DELETE http://127.0.0.1:8000/api/comment/04292fdb-3489-4808-ac6b-201a17d28aa9
+
+# comment.show (last parameter is the UUID)
+###
+GET http://127.0.0.1:8000/api/comment/b91990b2-5464-43cc-9a12-157f76ea03d2
+
+# comment.update
+###
+PUT http://127.0.0.1:8000/api/comment/71745e34-d7ca-44b8-aedb-8968b3853181
+Content-Type: application/json
+
+{
+    "title": "Information Technology"
+}

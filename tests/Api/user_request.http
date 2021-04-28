@@ -1,0 +1,72 @@
+# user.index
+###
+GET http://127.0.0.1:8000/api/user/
+
+# user.store
+###
+POST http://127.0.0.1:8000/register/
+Authorization: {{ authToken }}
+X-CSRF-TOKEN: {{ csrf_token() }}
+Content-Type: multipart/form-data; boundary=XXX
+
+--XXX
+Content-Disposition: form-data; name="fullname"
+
+Felix Janopol
+--XXX
+Content-Disposition: form-data; name="username"
+
+Philiks
+--XXX
+Content-Disposition: form-data; name="email"
+
+fjanopol@gmail.com
+--XXX
+Content-Disposition: form-data; name="password"
+
+password
+--XXX
+Content-Disposition: form-data; name="photo"; filename="sample.png"
+Content-Type: image/png
+
+> ./sample.png
+
+# user.delete (last parameter is the UUID)
+###
+DELETE http://127.0.0.1:8000/api/user/04292fdb-3489-4808-ac6b-201a17d28aa9
+
+# user.show (last parameter is the UUID)
+###
+GET http://127.0.0.1:8000/api/user/b91990b2-5464-43cc-9a12-157f76ea03d2
+
+# user.update
+###
+PUT http://127.0.0.1:8000/api/user/71745e34-d7ca-44b8-aedb-8968b3853181
+Content-Type: application/json
+
+{
+    "title": "Information Technology"
+}
+
+{
+    "event": "International Youth Contest 2021",
+    "theme": "Smart Transport Sustainability in the Daily Life",
+    "organizer": "European Center for Social Responsibility (ECSR.world)",
+    "participants": [
+        {
+            "name": "Lester John Salvoza",
+            "yr_and_sec": "BSCS 2A",
+            "award": "Diploma of Excellence"
+        },
+        {
+            "name": "Mark Lester Cardenas",
+            "yr_and_sec": "BSIT 2C",
+            "award": "Diploma of Participation"
+        }
+    ],
+    "awarded_by": {
+        "name": "Dr. Cristina Dragomir PhD Mech. Eng, PhD Man., MSc in Port and Man., BSc Int Buss",
+        "position": "Vice President of the European Center of Social Responsibility"
+    },
+    "awarded_at": "16 April 2021"
+}
