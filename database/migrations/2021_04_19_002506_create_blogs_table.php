@@ -17,11 +17,12 @@ class CreateBlogsTable extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('author_id')->constrained('users');
             $table->string('title');
-            $table->foreignUuid('main_photo_id')->constrained('photos');
-            $table->string('content');
+            $table->foreignUuid('main_photo_id')->nullable()->constrained('photos');
+            $table->boolean('is_featured')->default(true);
+            $table->longText('content');
             $table->integer('read_time')->comment('in minutes');
-            $table->integer('like_count');
-            $table->integer('comment_count');
+            $table->integer('like_count')->default(0);
+            $table->integer('comment_count')->default(0);
             $table->timestamps();
         });
     }
